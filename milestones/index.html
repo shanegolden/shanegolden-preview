@@ -1,49 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-CA">
 
 <head>
 
-  <script src="/js/pageTitleEffects.js"></script>
-  
+
+
   <!-- Basic -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  
+
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
- 
+
   <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  
+  <meta name="keywords" content="Shane Golden, finance, operations, technology, startups, Vancouver" />
+  <meta name="description" content="Explore selected companies and projects from Shane Golden's entrepreneurial career, spanning cryptocurrency, AI infrastructure, music technology, marketing, and data." />
+  <meta name="author" content="Shane Golden" />
+  <meta name="theme-color" content="#071337" />
+  <link rel="canonical" href="https://www.shanegolden.ca/milestones/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Milestones | Shane Golden" />
+  <meta property="og:description" content="Explore selected companies and projects from Shane Golden's entrepreneurial career, spanning cryptocurrency, AI infrastructure, music technology, marketing, and data." />
+  <meta property="og:url" content="https://www.shanegolden.ca/milestones/" />
+  <meta property="og:image" content="https://www.shanegolden.ca/images/slider-img0.png" />
+
   <!-- Favicon -->
-  <link rel="shortcut icon" href="/images/favicon.png" type="">
-  
-  <title> Shane Golden </title>
-  
+  <link rel="shortcut icon" href="/images/favicon.png" type="image/png">
+
+  <title>Milestones | Shane Golden</title>
+
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
-  
+
   <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-  
-  <!-- owl slider stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  
+
   <!-- font awesome style -->
   <link href="/css/font-awesome.min.css" rel="stylesheet" />
-  
+
   <!-- Custom styles for this template -->
   <link href="/css/style.css" rel="stylesheet" />
-  
+
   <!-- responsive style -->
   <link href="/css/responsive.css" rel="stylesheet" />
+  <link href="/css/home-refresh.css" rel="stylesheet" />
+  <link href="/css/inner-refresh.css" rel="stylesheet" />
 
 
 </head>
 
-<body class="sub_page">
+<body class="sub_page home-refresh inner-page page-milestones">
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <div class="hero_area">
 
@@ -60,7 +67,7 @@
           <a class="navbar-brand" href="/">
             <!-- Desktop logo -->
             <img src="/images/logo-pc.png" alt="Logo" class="d-none d-md-block" style="height: 40px;">
-          
+
             <!-- Mobile logo -->
             <img src="/images/logo-mb.png" alt="Mobile Logo" class="d-block d-md-none" style="height: 35px;">
           </a>
@@ -90,26 +97,35 @@
               <li class="nav-item">
                 <a class="nav-link" href="/results/">Results</a>
               </li>
-              <form class="form-inline">
-              </form>
+              <li class="nav-item nav-cta">
+                <a class="nav-link" href="mailto:info@shanegolden.ca">Connect</a>
+              </li>
             </ul>
           </div>
         </nav>
       </div>
     </header>
     <!-- end header section -->
+
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container">
+        <p class="page-kicker">Selected work &middot; 2011&ndash;2025</p>
+        <h1 id="page-title">From early bets to<br><span>enduring systems.</span></h1>
+        <p class="page-summary">Eight projects across technology, finance, media, and community&mdash;each shaped by the same bias toward action and durable execution.</p>
+      </div>
+    </section>
   </div>
-    
+
     <!-- milestones title section -->
-    <section class="service_section layout_padding">
+    <section id="main-content" class="service_section layout_padding">
       <div class="service_container">
         <div class="container ">
           <div class="heading_container heading_center">
             <h2>
-              Milestone <span>Projects</span>
+              Eight projects. <span>One operating thread.</span>
             </h2>
             <p>
-              Companies and projects Im proud to display I've had the priviledge of being apart of.
+              Selected companies and projects I have had the privilege to build, lead, and support.
             </p>
           </div>
         </div>
@@ -125,7 +141,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="img-box">
-            <img src="/images/m1.png" alt="">
+            <img src="/images/m1.png" alt="Milestone project 1 artwork" loading="lazy">
           </div>
         </div>
         <div class="col-md-6">
@@ -136,33 +152,22 @@
             <h5>
               Founder, COO
             </h5>
-  
+
             <!-- Snippet shown by default -->
             <p>Charity driven athleisure apparel. Support Make-a-Wish & Breakfast Club of Canada with each purchase.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
               <p>Potential Apparel was more than a clothing company. Together, with the industries brightest athletes, Potential Apparel raised awareness of its’ partnered charity Make-A-Wish Canada. Potential Apparel empowered children by allowing them the chance to become superstars. With Potential Apparel you can look good and feel good doing it!</p>
             </div>
-  
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- Toggle script -->
-  <script>
-    function toggleReview(button) {
-      const moreText = button.previousElementSibling;
-      const isVisible = moreText.style.display === "block";
-  
-      moreText.style.display = isVisible ? "none" : "block";
-      button.textContent = isVisible ? "Read more" : "Show less";
-    }
-  </script>
 
   <!-- end milestones 1 section -->
 
@@ -180,40 +185,29 @@
             <h5>
               Co-Founder, Co-Chair, Treasurer
             </h5>
-  
+
             <!-- Snippet shown by default -->
             <p>Making sustainable use of the business development generated from Potential Apparel, built relationships with charities, venues, partners, sponsors, professional athletes (NHL, NFL, MLS, CFL, etc), and‬ attendees with the ultimate responsibility of coordinating and executing a successful event and sharing responsibilities for‬ event planning, sponsorships, marketing strategy, and building brand awareness through social media.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
               <p>The Annual Whistler Invitational was hosted by Ryan Johansen and Brenden Dillon had a goal to bring together some of the world’s finest hockey players and golf enthusiasts for a fulfilling unique weekend event that raised funds and awareness for the partnered charities: Make-A-Wish, Breakfast Club of Canada, and Canucks Autism Network.</p>
             </div>
-  
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
-  
+
         <!-- Image column second -->
         <div class="col-md-6">
           <div class="img-box">
-            <img src="/images/m2.png" alt="">
+            <img src="/images/m2.png" alt="Milestone project 2 artwork" loading="lazy">
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- Toggle script -->
-  <script>
-    function toggleReview(button) {
-      const moreText = button.previousElementSibling;
-      const isVisible = moreText.style.display === "block";
-  
-      moreText.style.display = isVisible ? "none" : "block";
-      button.textContent = isVisible ? "Read more" : "Show less";
-    }
-  </script>
   <!-- end milestones 2 section -->
 
   <!-- milestones 3 section -->
@@ -224,47 +218,36 @@
         <div class="col-md-6">
           <div class="img-box">
             <a href="https://goldenstrike.ca/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/m3.png" alt="">
+              <img src="/images/m3.png" alt="Milestone project 3 artwork" loading="lazy">
             </a>
           </div>
         </div>
         <div class="col-md-6">
           <div class="detail-box">
             <h3>
-              <a href="https://www.goldenstrike.ca/" target="_blank" style="all: unset; cursor: pointer; color: inherit;">Goldenstrike Technologies Inc., <br /> Est. 2011 - Exit. 2018 </a>
+              <a href="https://www.goldenstrike.ca/" target="_blank" rel="noopener noreferrer" style="all: unset; cursor: pointer; color: inherit;">Goldenstrike Technologies Inc., <br /> Est. 2011 - Exit. 2018 </a>
             </h3>
             <h5>
               Founder, Director
             </h5>
-  
+
             <!-- Snippet shown by default -->
             <p>Goldenstrike Technologies was a one stop solution for commercial cryptocurrency mining operations. Comprehensive from consulting, building, installation, management software, and servicing. Trusted by some of the largest mining operations worldwide.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
               <p>Software IP for Cryptocurrency Mine Management Software for ASICs and GPU Job Prioritization Proudly acquired by Qoor.</p>
               <p>Blockchain validation consultancy and comprehensive mine management SaaS.</p>
               <p>Solely founded and directed overall company vision and continued success including supporting the growth of the vastly growing blockchain‬ validation industry in Canada with projects across the Pacific Northwest, the United Kingdom, and the Middle East. Worked closely with clients‬ to build sustainable, profitable, blockchain validation (cryptocurrency mining) operations with the value of client projects growing to 8 figures.‬ Developed and sold a SaaS platform IP to an AI/ML San Francisco firm.‬</p>
             </div>
-  
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- Toggle script -->
-  <script>
-    function toggleReview(button) {
-      const moreText = button.previousElementSibling;
-      const isVisible = moreText.style.display === "block";
-  
-      moreText.style.display = isVisible ? "none" : "block";
-      button.textContent = isVisible ? "Read more" : "Show less";
-    }
-  </script>
 
   <!-- end milestones 3 section -->
 
@@ -280,12 +263,12 @@
               Qoor, 2019
             </h3>
             <h5>
-              Executive VP and Membor of the Board
+              Executive VP and Member of the Board
             </h5>
-  
+
          <!-- Snippet shown by default -->
             <p>Infrastructure and Platform as a Service that builds, trains, and deploys Artificial Intelligence and Machine Learning.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
               <p>Qoor was founded in March of 2018 in Silicon Valley, California with a singular goal: to revolutionize the computational infrastructure market through convergence. We focus on delivering value to our investors and customers through our dual-use hardware and software stack that supports both dedicated computation and blockchain.</p>
@@ -294,16 +277,16 @@
               <p>Provided active leadership in various areas of the business including maintaining a healthy work environment and overall‬ culture, oversight of financial management, shareholder and client relations, budget/forecast development, sales‬ innovations, and strategic business development while ensuring the achievement of financial and operational goals.‬ Supported executive teams in problem-solving, decision-making, and outreach.‬</p>
               <p>Artificial Intelligence infrastructure and software solutions. Provided active leadership in various areas of the business including maintaining a healthy work environment and overall‬ culture, oversight of financial management, shareholder and client relations, budget/forecast development, sales‬ innovations, and strategic business development while ensuring the achievement of financial and operational goals.‬ Supported executive teams in problem-solving, decision-making, and outreach.‬</p>
             </div>
-  
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
-  
+
         <!-- Image column second -->
         <div class="col-md-6">
           <div class="img-box">
-            <img src="/images/m4.png" alt="">
+            <img src="/images/m4.png" alt="Milestone project 4 artwork" loading="lazy">
           </div>
         </div>
       </div>
@@ -319,7 +302,7 @@
         <div class="col-md-6">
           <div class="img-box">
             <a href="https://skiomusic.com/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/m5.png" alt="">
+              <img src="/images/m5.png" alt="Milestone project 5 artwork" loading="lazy">
             </a>
           </div>
         </div>
@@ -331,35 +314,24 @@
             <h5>
               Leadership Team
             </h5>
-  
+
             <!-- Snippet shown by default -->
             <p>Online platform that empowers music producers, artists, and songwriters by providing tools for collaboration, licensing, and talent development. The platform pioneered facilitating legal music licensing, enabling artists to remix and collaborate without infringement concerns. It hosts remix and original song contests, offering opportunities for creators to showcase their work and win prizes such as official releases, recording budgets, and scholarships.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
                <p>With a community exceeding 650,000 members from over 190 countries, SKIO Music fosters connections among creators and offers resources like feedback from A&R professionals to help artists advance their careers.</p>
               <p>Coordinated operations and management related to information and data, business systems, operational effectiveness,‬ transparency and communications, oversight, finance/tax/grants, payroll/remittance, and legal business activities. Regularly worked alongside the CEO and ensured efficient flow of internal data and information across the company and its stakeholders.
 Coordinated operations and management related to information and data, business systems, operational effectiveness,‬ transparency and communications, oversight, finance/tax/grants, payroll/remittance, and legal business activities. Regularly worked alongside the CEO and ensured efficient flow of internal data and information across the company and its stakeholders.</p>
             </div>
-  
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- Toggle script -->
-  <script>
-    function toggleReview(button) {
-      const moreText = button.previousElementSibling;
-      const isVisible = moreText.style.display === "block";
-  
-      moreText.style.display = isVisible ? "none" : "block";
-      button.textContent = isVisible ? "Read more" : "Show less";
-    }
-  </script>
 
   <!-- end milestones 5 section -->
 
@@ -377,10 +349,10 @@ Coordinated operations and management related to information and data, business 
             <h5>
               Director of Finance and Operations
             </h5>
-  
+
             <!-- Snippet shown by default -->
             <p>State-of-the-art performance agency pushing boundaries through innovative and result-oriented solutions in branding, digital marketing and business growth.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
               <p>Director of company finance and administrative operations related to informational data, operational systems, finance/tax,‬ payroll/remittance, and legal business activities. Co-founded, launched, and solely manage all finance and‬ administrative operations.</p>
@@ -388,33 +360,21 @@ Coordinated operations and management related to information and data, business 
             <p>We didn't follow trends—we set them. With innovative strategies in branding, paid media, and growth marketing, Go Left amplified your presence and accelerate your expansion. The team fused creativity with data-driven precision to craft campaigns that captivated, converted, and retained.</p>
             <p>From redefining brand’s identities to engineering high-impact digital experiences, Go Left was a partner in pushing boundaries—and achieving extraordinary outcomes.</p>
             </div>
-            
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
-  
+
         <!-- Image column second -->
         <div class="col-md-6">
           <div class="img-box">
-            <img src="/images/m6.png" alt="">
+            <img src="/images/m6.png" alt="Milestone project 6 artwork" loading="lazy">
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- Toggle script -->
-  <script>
-  function toggleReview(button) {
-    const detailBox = button.closest('.detail-box');
-    const moreText = detailBox.querySelector('.more-text');
-    const isVisible = moreText.style.display === "block";
-
-    moreText.style.display = isVisible ? "none" : "block";
-    button.textContent = isVisible ? "Read more" : "Show less";
-  }
-</script>
 
   <!-- end milestones 6 section -->
 
@@ -426,47 +386,36 @@ Coordinated operations and management related to information and data, business 
         <div class="col-md-6">
           <div class="img-box">
             <a href="https://mediafy.agency/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/m7.png" alt="">
+              <img src="/images/m7.png" alt="Milestone project 7 artwork" loading="lazy">
             </a>
           </div>
         </div>
         <div class="col-md-6">
           <div class="detail-box">
             <h3>
-              <a href="https://www.mediafy.agency/" target="_blank" style="all: unset; cursor: pointer; color: inherit;">Mediafy, 2024</a>
+              <a href="https://www.mediafy.agency/" target="_blank" rel="noopener noreferrer" style="all: unset; cursor: pointer; color: inherit;">Mediafy, 2024</a>
             </h3>
             <h5>
               Consultant, Senior Strategist
             </h5>
-  
+
             <!-- Snippet shown by default -->
             <p>A modern performance-driven marketing agency engineered for scale, precision, and measurable impact. Operating at the intersection of strategy, creativity, and analytics, Mediafy specializes in helping brands grow through intelligently crafted digital experiences and high-converting campaigns.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
               <p>The agency’s core strength lies in its ability to integrate brand strategy with media execution—delivering cohesive, data-informed marketing systems that not only reach audiences but resonate with them. From paid acquisition and content strategy to conversion optimization and performance analytics, Mediafy’s approach is deeply methodical and results-oriented.</p>
               <p>With a team composed of seasoned strategists, media buyers, and creative talent, Mediafy doesn’t chase trends—it builds marketing infrastructure that withstands them. Its campaigns are built on clarity, not noise; on efficiency, not vanity metrics.</p>
               <p>For brands looking to move beyond short-term wins and invest in sustainable growth, Mediafy represents a rare combination of rigor, insight, and executional excellence.</p>
             </div>
-  
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- Toggle script -->
-  <script>
-    function toggleReview(button) {
-      const moreText = button.previousElementSibling;
-      const isVisible = moreText.style.display === "block";
-  
-      moreText.style.display = isVisible ? "none" : "block";
-      button.textContent = isVisible ? "Read more" : "Show less";
-    }
-  </script>
 
   <!-- end milestones 7 section -->
 
@@ -479,15 +428,15 @@ Coordinated operations and management related to information and data, business 
         <div class="col-md-6">
           <div class="detail-box">
             <h3>
-              <a href="https://www.somedata.ai/" target="_blank" style="all: unset; cursor: pointer; color: inherit;">SomeData, 2025</a>
+              <a href="https://www.somedata.ai/" target="_blank" rel="noopener noreferrer" style="all: unset; cursor: pointer; color: inherit;">SomeData, 2025</a>
             </h3>
             <h5>
               VP Finance
             </h5>
-  
+
          <!-- Snippet shown by default -->
             <p>Equipping teams with clean, verified data, for precision outbound lead generation through advanced email discovery and verification tools. By leveraging only a lead’s first name, last name, and website, somedata.ai can accurately identify their professional email address—streamlining the front end of any outbound campaign, dramatically reducing bounce rates and improving inbox placement.</p>
-  
+
             <!-- Hidden content until "Read more" is clicked -->
             <div class="more-text" style="display: none;">
               <p>Transforming how modern organizations harness information to drive smarter decisions, faster. At its core, the platform merges machine learning with human insight—delivering actionable, real-time analytics that empower teams to move with clarity and confidence.</p>
@@ -495,17 +444,17 @@ Coordinated operations and management related to information and data, business 
               <p>What sets somedata.ai apart is not just its technology, but its ethos: an unrelenting focus on precision, transparency, and performance. The platform integrates seamlessly with existing tools, enabling teams to build data maturity without overhauling their tech stack.</p>
               <p>In a landscape overwhelmed by data but starved for direction, somedata.ai delivers the edge—turning raw numbers into competitive advantage.</p>
             </div>
-  
+
             <!-- Read more toggle -->
-            <button onclick="toggleReview(this)" class="read-more-btn" style="border: none; background: none; color: #007bff; padding: 0; cursor: pointer;">Read more</button>
+            <button onclick="toggleReview(this)" class="read-more-btn">Read more</button>
           </div>
         </div>
-  
+
         <!-- Image column second -->
         <div class="col-md-6">
           <div class="img-box">
             <a href="https://somedata.ai/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/m8.png" alt="">
+              <img src="/images/m8.png" alt="Milestone project 8 artwork" loading="lazy">
             </a>
           </div>
         </div>
@@ -525,13 +474,13 @@ Coordinated operations and management related to information and data, business 
               Location
             </h4>
             <div class="contact_link_box">
-              <a href="">
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Vancouver%2C%20BC" target="_blank" rel="noopener noreferrer">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <span>
                   Vancouver, BC
                 </span>
               </a>
-              <a href="">
+              <a href="mailto:info@shanegolden.ca">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
                   info@shanegolden.ca
@@ -570,7 +519,7 @@ Coordinated operations and management related to information and data, business 
               Links
             </h4>
             <div class="info_links">
-              <a class="active" href="/">
+              <a class="" href="/">
                 Home
               </a>
               <a class="" href="/about/">
@@ -582,7 +531,7 @@ Coordinated operations and management related to information and data, business 
               <a class="" href="/why/">
                 Why Shane
               </a>
-              <a class="" href="/milestones/">
+              <a class="active" href="/milestones/">
                 Milestones
               </a>
               <a class="" href="/results/">
@@ -595,8 +544,9 @@ Coordinated operations and management related to information and data, business 
           <h4>
             Request an Email
           </h4>
-          <form action="https://formsubmit.co/b4fee62468b703d3784eafbf84624bdc" method="POST" />
-    <input type="email" name="email" placeholder="Enter email" required />
+          <form action="https://formsubmit.co/b4fee62468b703d3784eafbf84624bdc" method="POST">
+    <label class="sr-only" for="contact-email">Email address</label>
+            <input id="contact-email" type="email" name="email" placeholder="Enter email" autocomplete="email" required />
             <button type="submit"> Send </button>
     <input type="hidden" name="_next" value="https://shanegolden.ca/thanks/">
     <input type="hidden" name="_captcha" value="false">
@@ -612,7 +562,7 @@ Coordinated operations and management related to information and data, business 
   <section class="footer_section">
     <div class="container">
       <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By Shane Golden
+        &copy; <span id="displayYear"></span> Shane Golden. All rights reserved.
       </p>
     </div>
   </section>
@@ -625,31 +575,10 @@ Coordinated operations and management related to information and data, business 
   </script>
   <!-- bootstrap js -->
   <script type="text/javascript" src="/js/bootstrap.js"></script>
-  <!-- owl slider -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-  </script>
   <!-- custom js -->
   <script type="text/javascript" src="/js/custom.js"></script>
-  <!-- Google Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
-  </script>
-  <!-- End Google Map -->
-
-  <script>
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-</script>
+  <script src="/js/home-refresh.js"></script>
+  <script src="/js/inner-refresh.js"></script>
 
 </body>
 
