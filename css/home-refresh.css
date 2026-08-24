@@ -578,6 +578,64 @@ body.home-refresh {
 .home-refresh .footer_section { background: #02061e; }
 .home-refresh .footer_section p { padding: 18px 0; color: rgba(255,255,255,0.5); font-size: 0.75rem; }
 
+/* Content-safe component sizing */
+.home-refresh .service_section .row { align-items: stretch; }
+.home-refresh .service_section [class*="col-"] { display: flex; }
+.home-refresh .service_section .box {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.home-refresh .service_section .box::before { border-radius: 10px 10px 0 0; }
+.home-refresh .service_section .box .detail-box,
+.home-refresh .why_section .box .detail-box,
+.home-refresh .team_section .team_container .box .detail-box,
+.home-refresh .client_section .box .detail-box {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.home-refresh .why_section .box {
+  height: auto;
+  overflow: visible;
+}
+
+.home-refresh .team_section .team_container { max-width: 720px; }
+.home-refresh .team_section .team_container .row { margin-inline: 0; }
+.home-refresh .team_section .team_container .row > [class*="col-"] {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  padding-inline: 0;
+}
+.home-refresh .team_section .team_container .box {
+  width: 100%;
+  height: auto;
+  grid-template-columns: minmax(110px, 150px) minmax(0, 1fr);
+  overflow: visible;
+}
+.home-refresh .team_section .team_container .box .detail-box { margin: 0; }
+.home-refresh .team_section .team_container .box .social_box {
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.home-refresh .client_section .owl-carousel .owl-stage {
+  display: flex;
+  align-items: stretch;
+}
+.home-refresh .client_section .owl-carousel .owl-item { display: flex; height: auto; }
+.home-refresh .client_section .owl-carousel .item,
+.home-refresh .client_section .owl-carousel .box { width: 100%; height: 100%; }
+.home-refresh .client_section .box .img-box { z-index: 2; }
+.home-refresh .client_section .box .detail-box {
+  height: 100%;
+  min-height: 0;
+  padding-top: 74px;
+  overflow: visible;
+}
+
 @media (max-width: 1100px) {
   .home-refresh .custom_nav-container .navbar-nav .nav-item .nav-link { padding-inline: 9px; }
   .home-refresh .custom_nav-container .navbar-nav .nav-item:not(.nav-cta) .nav-link::after { right: 9px; left: 9px; }
