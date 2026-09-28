@@ -3,7 +3,7 @@
 
   var header = document.querySelector(".header_section");
   var carousel = document.getElementById("customCarousel1");
-  var contactEndpoint = "https://contact.shanegolden.ca/contact";
+  var contactEndpoint = "https://shanegolden-contact.shanegolden.workers.dev/contact";
   var turnstileSiteKey = "0x4AAAAAAFIBis0p9SRQ28KX";
   var contactDialog;
   var contactForm;
