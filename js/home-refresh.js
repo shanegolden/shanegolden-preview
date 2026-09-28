@@ -32,6 +32,69 @@
     });
   }
 
+  function renderStoryNumbers(index) {
+    if (!carousel) return;
+    var track = carousel.querySelector(".hero-story-number-track");
+    if (!track) return;
+    var count = carousel.querySelectorAll(".carousel-item").length;
+    var buttons = track.querySelectorAll(".hero-story-number");
+
+    track.classList.remove("is-moving");
+    track.style.setProperty("--hero-number-offset", "-1");
+
+    for (var offset = -2; offset <= 2; offset++) {
+      var slideIndex = (index + offset + count) % count;
+      var button = buttons[offset + 2] || document.createElement("button");
+      button.type = "button";
+      button.className = "hero-story-number";
+      button.textContent = String(slideIndex + 1).padStart(2, "0");
+      button.setAttribute("data-target", "#customCarousel1");
+      if (offset === 0) {
+        button.removeAttribute("data-slide");
+        button.setAttribute("data-slide-to", String(slideIndex));
+      } else {
+        button.removeAttribute("data-slide-to");
+        button.setAttribute("data-slide", offset < 0 ? "prev" : "next");
+      }
+      button.setAttribute("aria-label", "Show story " + (slideIndex + 1) + " of " + count);
+      if (offset === 0) button.setAttribute("aria-current", "true");
+      else button.removeAttribute("aria-current");
+      if (Math.abs(offset) > 1) {
+        button.tabIndex = -1;
+        button.setAttribute("aria-hidden", "true");
+      } else {
+        button.tabIndex = 0;
+        button.removeAttribute("aria-hidden");
+      }
+      if (!button.parentNode) track.appendChild(button);
+    }
+  }
+
+  function animateStoryNumbers(event) {
+    var track = carousel.querySelector(".hero-story-number-track");
+    if (!track) return;
+
+    // Move one number-width with the slide, including the 09/01 wrap.
+    var step = event.direction === "left" ? 1 : -1;
+    var count = carousel.querySelectorAll(".carousel-item").length;
+    var positions = [-2, -1, 0, 1, 2];
+    if ((event.from + step + count) % count !== event.to) {
+      // Keep the chosen slide in the incoming middle position for larger jumps.
+      positions = step > 0 ? [-2, -1, 0, event.to - event.from, event.to - event.from + 1]
+        : [event.to - event.from - 1, event.to - event.from, 0, 1, 2];
+    }
+    Array.from(track.children).forEach(function (button, i) {
+      var slideIndex = (event.from + positions[i] + count) % count;
+      button.textContent = String(slideIndex + 1).padStart(2, "0");
+      button.setAttribute("aria-label", "Show story " + (slideIndex + 1) + " of " + count);
+      if (slideIndex === event.to) button.setAttribute("aria-current", "true");
+      else button.removeAttribute("aria-current");
+    });
+    track.getBoundingClientRect();
+    track.classList.add("is-moving");
+    track.style.setProperty("--hero-number-offset", step > 0 ? "-2" : "0");
+  }
+
   function buildContactDialog() {
     var wrapper = document.createElement("div");
 
@@ -276,6 +339,9 @@
   if (carousel && window.jQuery) {
     window.jQuery(carousel).on("slide.bs.carousel", function (event) {
       syncIndicators(event.to);
+      animateStoryNumbers(event);
+    }).on("slid.bs.carousel", function (event) {
+      renderStoryNumbers(event.to);
     });
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -284,4 +350,5 @@
   }
 
   syncIndicators(0);
+  renderStoryNumbers(0);
 })();
