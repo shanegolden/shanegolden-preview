@@ -3,12 +3,16 @@
 
   var header = document.querySelector(".header_section");
   var carousel = document.getElementById("customCarousel1");
-  var contactEndpoint = "https://formsubmit.co/ajax/b4fee62468b703d3784eafbf84624bdc";
+  var contactEndpoint = "https://contact.shanegolden.ca/contact";
+  var turnstileSiteKey = "0x4AAAAAAFIBis0p9SRQ28KX";
   var contactDialog;
   var contactForm;
   var contactStatus;
   var contactToast;
   var lastContactTrigger;
+  var turnstileWidgetId;
+  var turnstileScriptPromise;
+  var pendingContactSubmission = false;
 
   function updateHeader() {
     if (header) {
@@ -42,16 +46,14 @@
       '    <form class="contact-dialog__form" novalidate>',
       '      <div class="contact-dialog__field">',
       '        <label for="contact-dialog-email">Your email</label>',
-      '        <input id="contact-dialog-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required>',
+      '        <input id="contact-dialog-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" maxlength="254" required>',
       '      </div>',
       '      <div class="contact-dialog__field">',
       '        <label for="contact-dialog-message">Message</label>',
-      '        <textarea id="contact-dialog-message" name="message" rows="6" placeholder="Tell me a little about what you are working on." required></textarea>',
+      '        <textarea id="contact-dialog-message" name="message" rows="6" maxlength="4000" placeholder="Tell me a little about what you are working on." required></textarea>',
       '      </div>',
-      '      <input class="contact-dialog__honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">',
-      '      <input type="hidden" name="_subject" value="New message from shanegolden.ca">',
-      '      <input type="hidden" name="_template" value="table">',
-      '      <input type="hidden" name="_captcha" value="false">',
+      '      <input class="contact-dialog__honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">',
+      '      <div class="contact-dialog__turnstile" aria-label="Security check"></div>',
       '      <p class="contact-dialog__status" role="status" aria-live="polite"></p>',
       '      <button class="contact-dialog__submit" type="submit">Send message</button>',
       '    </form>',
@@ -72,6 +74,74 @@
     contactForm.addEventListener("submit", submitContactForm);
   }
 
+  function loadTurnstile() {
+    if (window.turnstile) return Promise.resolve(window.turnstile);
+    if (turnstileScriptPromise) return turnstileScriptPromise;
+
+    turnstileScriptPromise = new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+      script.onload = function () {
+        if (window.turnstile) resolve(window.turnstile);
+        else reject(new Error("Security check unavailable"));
+      };
+      script.onerror = function () {
+        reject(new Error("Security check unavailable"));
+      };
+      document.head.appendChild(script);
+    });
+
+    return turnstileScriptPromise;
+  }
+
+  function ensureTurnstile() {
+    return loadTurnstile().then(function () {
+      if (turnstileWidgetId !== undefined) return turnstileWidgetId;
+
+      turnstileWidgetId = window.turnstile.render(
+        contactDialog.querySelector(".contact-dialog__turnstile"),
+        {
+          sitekey: turnstileSiteKey,
+          action: "contact",
+          appearance: "interaction-only",
+          execution: "execute",
+          callback: function (token) {
+            if (!pendingContactSubmission) return;
+            pendingContactSubmission = false;
+            sendContactForm(token);
+          },
+          "error-callback": handleTurnstileFailure,
+          "expired-callback": handleTurnstileFailure,
+          "timeout-callback": handleTurnstileFailure
+        }
+      );
+
+      return turnstileWidgetId;
+    });
+  }
+
+  function setContactFormBusy(isBusy) {
+    var submitButton = contactForm.querySelector("button[type='submit']");
+    submitButton.disabled = isBusy;
+    submitButton.textContent = isBusy ? "Sending..." : "Send message";
+  }
+
+  function resetTurnstile() {
+    if (window.turnstile && turnstileWidgetId !== undefined) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  function handleTurnstileFailure() {
+    if (!pendingContactSubmission) return;
+    pendingContactSubmission = false;
+    setContactFormBusy(false);
+    contactStatus.textContent = "The security check could not finish. Please try again.";
+    showContactToast("Message not sent. Please try again.", true);
+  }
+
   function openContactDialog(trigger) {
     var openNavigation = document.querySelector(".navbar-collapse.show");
 
@@ -87,6 +157,9 @@
     contactDialog.hidden = false;
     document.body.classList.add("contact-dialog-open");
     contactDialog.querySelector("input[type='email']").focus();
+    ensureTurnstile().catch(function () {
+      contactStatus.textContent = "The secure form could not load. Please refresh and try again.";
+    });
   }
 
   function closeContactDialog() {
@@ -112,21 +185,9 @@
     }, 5200);
   }
 
-  function submitContactForm(event) {
-    var submitButton = contactForm.querySelector("button[type='submit']");
-    var formData;
-
-    event.preventDefault();
-
-    if (!contactForm.checkValidity()) {
-      contactForm.reportValidity();
-      return;
-    }
-
-    submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
-    contactStatus.textContent = "Sending your message securely...";
-    formData = new FormData(contactForm);
+  function sendContactForm(turnstileToken) {
+    var formData = new FormData(contactForm);
+    formData.set("cf-turnstile-response", turnstileToken);
 
     window.fetch(contactEndpoint, {
       method: "POST",
@@ -140,21 +201,61 @@
       .then(function (data) {
         if (data && data.success === false) throw new Error("Message delivery failed");
         contactForm.reset();
+        resetTurnstile();
         closeContactDialog();
         showContactToast("Message sent. Shane will get back to you soon.", false);
       })
       .catch(function () {
-        contactStatus.textContent = "The message could not be sent. Please try again or email info@shanegolden.ca.";
+        resetTurnstile();
+        contactStatus.textContent = "The message could not be sent. Please try again.";
         showContactToast("Message not sent. Please try again.", true);
       })
       .finally(function () {
-        submitButton.disabled = false;
-        submitButton.textContent = "Send message";
+        setContactFormBusy(false);
       });
   }
 
+  function submitContactForm(event) {
+    event.preventDefault();
+
+    if (!contactForm.checkValidity()) {
+      contactForm.reportValidity();
+      return;
+    }
+
+    setContactFormBusy(true);
+    contactStatus.textContent = "Checking and sending your message securely...";
+    pendingContactSubmission = true;
+
+    ensureTurnstile()
+      .then(function (widgetId) {
+        window.turnstile.execute(widgetId);
+      })
+      .catch(handleTurnstileFailure);
+  }
+
+  function openContactDialogFromForm(event) {
+    var sourceForm = event.currentTarget;
+    var emailField = sourceForm.querySelector("input[type='email']");
+    var messageField = sourceForm.querySelector("textarea[name='message']");
+
+    event.preventDefault();
+    if (!sourceForm.checkValidity()) {
+      sourceForm.reportValidity();
+      return;
+    }
+
+    openContactDialog(sourceForm);
+    if (emailField && emailField.value) {
+      contactForm.querySelector("input[type='email']").value = emailField.value;
+    }
+    if (messageField && messageField.value) {
+      contactForm.querySelector("textarea[name='message']").value = messageField.value;
+    }
+  }
+
   document.addEventListener("click", function (event) {
-    var trigger = event.target.closest("[data-contact-trigger], a[href^='mailto:info@shanegolden.ca']");
+    var trigger = event.target.closest("[data-contact-trigger]");
 
     if (!trigger) return;
     event.preventDefault();
@@ -163,6 +264,10 @@
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") closeContactDialog();
+  });
+
+  document.querySelectorAll("form[data-contact-form]").forEach(function (form) {
+    form.addEventListener("submit", openContactDialogFromForm);
   });
 
   updateHeader();

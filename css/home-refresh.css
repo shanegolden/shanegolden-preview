@@ -681,6 +681,7 @@ body.contact-dialog-open { overflow: hidden; }
   box-shadow: 0 0 0 3px rgba(85, 241, 255, 0.14);
 }
 .contact-dialog__honeypot { position: absolute !important; left: -10000px !important; }
+.contact-dialog__turnstile { min-height: 1px; max-width: 100%; overflow: hidden; }
 .contact-dialog__status { min-height: 1.2em; margin: 0; color: rgba(255, 255, 255, 0.72); font-size: 0.82rem; }
 .contact-dialog__submit {
   justify-self: start;

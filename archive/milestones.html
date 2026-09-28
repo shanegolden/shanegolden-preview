@@ -32,6 +32,7 @@
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
 
+  <link href="/css/home-refresh.css" rel="stylesheet" />
 </head>
 
 <body class="sub_page">
@@ -522,10 +523,10 @@ Coordinated operations and management related to information and data, business 
                   Vancouver, BC
                 </span>
               </a>
-              <a href="">
+              <a href="#" data-contact-trigger>
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  info@shanegolden.ca
+                  Send a message
                 </span>
               </a>
             </div>
@@ -586,7 +587,7 @@ Coordinated operations and management related to information and data, business 
           <h4>
             Request an Email
           </h4>
-          <form action="https://formsubmit.co/b4fee62468b703d3784eafbf84624bdc" method="POST" />
+          <form action="#" data-contact-form method="POST" />
     <input type="email" name="email" placeholder="Enter email" required />
             <button type="submit"> Send </button>
     <input type="hidden" name="_next" value="https://shanegolden.ca/thanks.html">
@@ -642,6 +643,7 @@ Coordinated operations and management related to information and data, business 
   });
 </script>
 
+  <script src="/js/home-refresh.js"></script>
 </body>
 
 </html>
