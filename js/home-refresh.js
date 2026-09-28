@@ -23,13 +23,25 @@
   function syncIndicators(index) {
     if (!carousel) return;
 
-    carousel.querySelectorAll(".carousel-indicators li").forEach(function (indicator, i) {
+    var indicators = carousel.querySelectorAll(".carousel-indicators li");
+    var currentSlide = carousel.querySelector(".hero-slide-current");
+    var indicatorRail = carousel.querySelector(".carousel-indicators");
+    var progress = indicators.length ? ((index + 0.5) / indicators.length) * 100 : 0;
+
+    indicators.forEach(function (indicator, i) {
       if (i === index) {
         indicator.setAttribute("aria-current", "true");
       } else {
         indicator.removeAttribute("aria-current");
       }
     });
+
+    if (currentSlide) {
+      currentSlide.textContent = String(index + 1).padStart(2, "0");
+    }
+    if (indicatorRail) {
+      indicatorRail.style.setProperty("--hero-slide-progress", progress + "%");
+    }
   }
 
   function buildContactDialog() {
