@@ -2,13 +2,15 @@
 function getYear() {
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
-    document.querySelector("#displayYear").innerHTML = currentYear;
+    var yearElement = document.querySelector("#displayYear");
+    if (yearElement) yearElement.innerHTML = currentYear;
 }
 
 getYear();
 
 
 // client section owl carousel
+if (window.jQuery && $.fn.owlCarousel && $(".client_owl-carousel").length) {
 $(".client_owl-carousel").owlCarousel({
     loop: true,
     margin: 20,
@@ -33,11 +35,13 @@ $(".client_owl-carousel").owlCarousel({
         }
     }
 });
+}
 
 
 
 /** google_map js **/
 function myMap() {
+    if (!document.getElementById("googleMap") || !window.google || !google.maps) return;
     var mapProp = {
         center: new google.maps.LatLng(40.712775, -74.005973),
         zoom: 18,
