@@ -258,6 +258,7 @@ body.home-refresh {
   filter: drop-shadow(0 28px 28px rgba(0,0,0,0.22));
   animation: sgFloat 6s ease-in-out infinite;
 }
+.home-refresh .slider_section .hero-intro-mobile-image { display: none; }
 @keyframes sgFloat { 0%,100% { transform: translateY(-10px); } 50% { transform: translateY(12px); } }
 .home-refresh .slider_section .carousel-indicators {
   position: absolute;
@@ -853,6 +854,16 @@ body.contact-dialog-open { overflow: hidden; }
   .home-refresh .slider_section .detail-box .btn-box { justify-content: flex-start; }
   .home-refresh .slider_section .img-box { min-height: 330px; }
   .home-refresh .slider_section .img-box img { width: min(90%, 390px); height: 300px; }
+  .home-refresh .slider_section .hero-intro-slide .row { align-items: flex-start; }
+  .home-refresh .slider_section .hero-intro-desktop-image { display: none; }
+  .home-refresh .slider_section .hero-intro-mobile-image {
+    --hero-intro-image-height: clamp(220px, 60vw, 300px);
+    display: grid;
+    min-height: 0;
+    height: var(--hero-intro-image-height);
+    margin: 0 0 1.5rem;
+  }
+  .home-refresh .slider_section .hero-intro-mobile-image img { height: var(--hero-intro-image-height); }
   .home-refresh .slider_section .carousel-indicators { bottom: 5px; gap: 5px; }
   .home-refresh .slider_section .carousel-indicators li::after { display: none; }
   .home-refresh .service_section .box { min-height: auto; margin-top: 20px; }
