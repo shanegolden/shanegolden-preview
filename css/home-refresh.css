@@ -807,6 +807,11 @@ body.contact-dialog-open { overflow: hidden; }
   .home-refresh .custom_nav-container .navbar-nav .nav-item .nav-link { padding-inline: 9px; }
   .home-refresh .custom_nav-container .navbar-nav .nav-item:not(.nav-cta) .nav-link::after { right: 9px; left: 9px; }
 }
+@media (max-width: 1024px) {
+  .home-refresh .hero-story-numbers,
+  .home-refresh .hero-control { display: none; }
+  .home-refresh .slider_section #customCarousel1 { touch-action: pan-y pinch-zoom; }
+}
 @media (max-width: 991.98px) {
   .home-refresh .header_section { position: absolute; background: rgba(3,8,37,0.68); }
   .home-refresh .header_section.is-scrolled { position: fixed; }
