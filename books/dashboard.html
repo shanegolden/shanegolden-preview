@@ -54,6 +54,7 @@ h2 { border-bottom:1px solid #ccc; padding-bottom:0.5rem; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { textElement, createBookCard, createWinnerCard } from "./safe-rendering.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { getFirestore, collection, query, where, addDoc, getDocs, updateDoc, deleteDoc, doc, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -91,8 +92,8 @@ async function setupSubmissionListener() {
     const matchSelection = document.getElementById("matchSelection");
     const winnerDisplay = document.getElementById("winnerDisplay");
 
-    matchSelection.innerHTML = "";
-    winnerDisplay.innerHTML = "";
+    matchSelection.replaceChildren();
+    winnerDisplay.replaceChildren();
 
     if(!currentPeriod) {
       sectionTitle.innerText = "No Active Submission Period";
@@ -139,12 +140,12 @@ document.getElementById("submitBookBtn").addEventListener("click", async () => {
   if(matches.length===0) matches.push({title,author,coverUrl:"https://via.placeholder.com/120x180"});
 
   const container = document.getElementById("matchSelection");
-  container.innerHTML="<h3>Select the correct match:</h3>";
+  container.replaceChildren(textElement("h3", "Select the correct match:"));
 
   matches.forEach(b=>{
-    const div=document.createElement("div");
-    div.className="submission-card";
-    div.innerHTML = `<img src="${b.coverUrl}" class="book-cover"/><div class="book-info"><h3>${b.title}</h3><p>${b.author}</p><button class="btn btn-primary selectMatch">Select</button></div>`;
+    const div = createBookCard(b, {
+      buttons: [{ label: "Select", className: "btn btn-primary selectMatch" }]
+    });
     container.appendChild(div);
 
     div.querySelector(".selectMatch").addEventListener("click", async (e) => {
@@ -156,7 +157,7 @@ document.getElementById("submitBookBtn").addEventListener("click", async () => {
           submittedBy:currentUser.uid, periodId:currentPeriod.id,
           votes:[], createdAt:serverTimestamp()
         });
-        container.innerHTML="<p>Book submitted!</p>";
+        container.replaceChildren(textElement("p", "Book submitted!"));
         await loadMySubmissions();
       } catch(err) {
         console.error(err);
@@ -171,7 +172,7 @@ document.getElementById("submitBookBtn").addEventListener("click", async () => {
 async function loadVotingOptions() {
   if(!currentPeriod) return;
   const container = document.getElementById("matchSelection");
-  container.innerHTML="<h3>Vote for up to 3 books:</h3>";
+  container.replaceChildren(textElement("h3", "Vote for up to 3 books:"));
 
   const booksSnap = await getDocs(query(collection(db,"books"), where("periodId","==",currentPeriod.id)));
   const books = booksSnap.docs.map(d=>({id:d.id, ...d.data()}));
@@ -179,14 +180,14 @@ async function loadVotingOptions() {
   const userVotesCount = books.filter(b=>b.votes?.includes(currentUser.uid)).length;
 
   books.forEach(b=>{
-    const div = document.createElement("div");
-    div.className="submission-card";
     const userAlreadyVoted = b.votes?.includes(currentUser.uid);
-    div.innerHTML = `<img src="${b.coverUrl}" class="book-cover"/><div class="book-info"><h3>${b.title}</h3><p>${b.author}</p>
-      <button class="btn ${userAlreadyVoted || userVotesCount>=3 ? 'btn-danger' : 'btn-primary'} voteBtn" ${userAlreadyVoted || userVotesCount>=3 ? 'disabled' : ''}>
-        ${userAlreadyVoted ? 'Voted' : 'Vote'}
-      </button>
-    </div>`;
+    const div = createBookCard(b, {
+      buttons: [{
+        label: userAlreadyVoted ? "Voted" : "Vote",
+        className: `btn ${userAlreadyVoted || userVotesCount>=3 ? 'btn-danger' : 'btn-primary'} voteBtn`,
+        disabled: userAlreadyVoted || userVotesCount >= 3
+      }]
+    });
     container.appendChild(div);
 
     const voteBtn = div.querySelector(".voteBtn");
@@ -207,7 +208,7 @@ async function loadVotingOptions() {
 async function loadMySubmissions() {
   if(!currentUser) return;
   const container = document.getElementById("mySubmissionsList");
-  container.innerHTML="";
+  container.replaceChildren();
 
   const booksSnap = await getDocs(query(collection(db,"books"), where("submittedBy","==",currentUser.uid)));
   const books = booksSnap.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>b.createdAt?.toMillis() - a.createdAt?.toMillis());
@@ -216,18 +217,16 @@ async function loadMySubmissions() {
   const periods = periodsSnap.docs.map(d=>({id:d.id, ...d.data()}));
 
   books.forEach(b=>{
-    const div = document.createElement("div");
-    div.className="submission-card";
-
     const bookPeriod = periods.find(p=>p.id === b.periodId);
     const canEdit = bookPeriod && bookPeriod.active && !bookPeriod.votingActive;
 
-    div.innerHTML = `<img src="${b.coverUrl}" class="book-cover"/><div class="book-info"><h3>${b.title}</h3><p>${b.author}</p>
-      ${canEdit ? `<div class="book-actions">
-        <button class="btn btn-primary editBtn">Edit</button>
-        <button class="btn btn-danger deleteBtn">Delete</button>
-      </div>` : ""}
-    </div>`;
+    const div = createBookCard(b, {
+      groupedActions: true,
+      buttons: canEdit ? [
+        { label: "Edit", className: "btn btn-primary editBtn" },
+        { label: "Delete", className: "btn btn-danger deleteBtn" }
+      ] : []
+    });
     container.appendChild(div);
 
     if(canEdit){
@@ -249,7 +248,7 @@ async function loadMySubmissions() {
 // Display winner only if any votes exist
 async function displayWinner() {
   const container = document.getElementById("winnerDisplay");
-  container.innerHTML = ""; // clear previous content
+  container.replaceChildren(); // clear previous content
 
   if (!currentPeriod) return;
 
@@ -281,21 +280,7 @@ async function displayWinner() {
   }
 
   // Display winner as a card
-  const div = document.createElement("div");
-  div.className = "submission-card";
-  div.style.flexDirection = "column";
-  div.style.alignItems = "center";
-  div.innerHTML = `
-    <img src="${winner.coverUrl}" class="book-cover" style="width:150px;height:220px"/>
-    <div class="book-info" style="text-align:center; margin-top:0.5rem;">
-      <h3>${winner.title}</h3>
-      <p><strong>Author:</strong> ${winner.author}</p>
-      <p><strong>Year Published:</strong> ${details.year}</p>
-      <p><strong>Pages:</strong> ${details.pages}</p>
-      <p style="font-size:0.9rem;"><strong>Description:</strong> ${details.description}</p>
-      <p style="margin-top:0.5rem;"><strong>Votes:</strong> ${winner.votes?.length || 0}</p>
-    </div>
-  `;
+  const div = createWinnerCard(winner, details);
   container.appendChild(div);
 }
 

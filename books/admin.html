@@ -43,6 +43,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { createMemberCard, createPeriodCard, createBookCard } from "./safe-rendering.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { getFirestore, collection, getDocs, doc, updateDoc, addDoc, deleteDoc, query, where, serverTimestamp, arrayUnion, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -65,20 +66,11 @@ let submissionOpen = false;
 // Load pending member requests
 async function loadMemberRequests() {
   const container = document.getElementById("memberRequestsList");
-  container.innerHTML = "";
+  container.replaceChildren();
   const membersSnap = await getDocs(query(collection(db,"members"), where("approved","==",false)));
   membersSnap.forEach(docSnap => {
     const member = docSnap.data();
-    const card = document.createElement("div");
-    card.className = "member-card";
-    card.innerHTML = `
-      <div class="book-info">
-        <h3>${member.name || member.email}</h3>
-        <p>${member.email}</p>
-      </div>
-      <button class="btn approve">Approve</button>
-      <button class="btn deny">Deny</button>
-    `;
+    const card = createMemberCard(member);
     container.appendChild(card);
 
     card.querySelector(".approve").addEventListener("click", async () => {
@@ -97,20 +89,13 @@ async function loadMemberRequests() {
 async function loadSubmissionPeriods() {
   const periodsSnap = await getDocs(collection(db, "submissionPeriods"));
   const container = document.getElementById("submissionPeriodsList");
-  container.innerHTML = "";
+  container.replaceChildren();
 
   const sortedPeriods = periodsSnap.docs.sort((a,b) => b.data().createdAt?.toMillis() - a.data().createdAt?.toMillis());
   
   sortedPeriods.forEach(async docSnap => {
     const period = docSnap.data();
-    const card = document.createElement("div");
-    card.className = "period-card";
-    card.innerHTML = `
-      <h3>${period.name || 'Unnamed Period'} ${period.active ? '(Open)' : '(Closed)'} ${period.votingActive ? '(Voting Active)' : ''}</h3>
-      <button class="btn seeSubmissions">See Submissions</button>
-      <button class="btn editPeriod">Edit Name</button>
-      <button class="btn deletePeriod">Delete Period</button>
-    `;
+    const card = createPeriodCard(period);
     container.appendChild(card);
 
     // Start/end voting button (only for closed periods)
@@ -130,7 +115,7 @@ async function loadSubmissionPeriods() {
       const submissionsListDiv = document.createElement("div");
       submissionsListDiv.style.marginTop = "1rem";
       card.appendChild(submissionsListDiv);
-      submissionsListDiv.innerHTML = "";
+      submissionsListDiv.replaceChildren();
 
       const submissionsSnap = await getDocs(query(collection(db,"books"), where("periodId","==",docSnap.id)));
 
@@ -138,16 +123,7 @@ async function loadSubmissionPeriods() {
       const books = [];
       for(const bDoc of submissionsSnap.docs){
         const b = bDoc.data();
-        const bookCard = document.createElement("div");
-        bookCard.className = "submission-card";
-        bookCard.innerHTML = `
-          <img src="${b.coverUrl || 'https://via.placeholder.com/120x180'}" class="book-cover"/>
-          <div class="book-info">
-            <h3>${b.title}</h3>
-            <p>${b.author}</p>
-            <p>Votes: ${b.votes?.length || 0}</p>
-          </div>
-        `;
+        const bookCard = createBookCard(b, { showVotes: true });
         submissionsListDiv.appendChild(bookCard);
         books.push({...b, id:bDoc.id});
       }
