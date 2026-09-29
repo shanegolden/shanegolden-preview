@@ -269,7 +269,7 @@ body.inner-page {
 .page-milestones > section[id^="milestones-"] .detail-box::before {
   margin-bottom: 1.3rem;
   color: var(--sg-blue);
-  content: "0" counter(milestone);
+  content: counter(milestone, decimal-leading-zero);
   font-size: 0.72rem;
   font-weight: 850;
   letter-spacing: 0.16em;
